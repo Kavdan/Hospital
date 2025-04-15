@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import javax.xml.crypto.Data;
 
-class Doctor {
+public class Doctor {
 	private String id;
 	private String specialization;
 	private List<String> schedule;

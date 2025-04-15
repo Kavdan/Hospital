@@ -1,26 +1,24 @@
 package com.mycompany.hospital.models;
 
-import java.util.Date;
 import java.util.UUID;
 
-class Patient {
+public class Patient {
 	private String id;
-	private int age;
-	private String name;
+	// private int age;
+	private String fullName;
 	private String number;
-	private Long date;
+	private String birthDate;
 
 	public Patient() {
 		this.id = UUID.randomUUID().toString();
-		this.date = new Date().getTime();
 	}
 
-	public Patient(int age, String name, String number) {
+	public Patient(String fullName, String number, String birthDate) {
 		this.id = UUID.randomUUID().toString();
-		this.age = age;
-		this.name = name;
+		// this.age = age;
+		this.fullName = fullName;
 		this.number = number;
-		this.date = new Date().getTime();
+		this.birthDate = birthDate;
 	}
 
 	public void setId(String id) {
@@ -31,20 +29,20 @@ class Patient {
 		return this.id;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	// public void setAge(int age) {
+	// 	this.age = age;
+	// }
+
+	// public int getAge() {
+	// 	return this.age;
+	// }
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
-	public int getAge() {
-		return this.age;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return this.name;
+	public String getFullName() {
+		return this.fullName;
 	}
 
 	public void setNumber(String number) {
@@ -55,8 +53,12 @@ class Patient {
 		return this.number;
 	}
 
-	public Long getDate() {
-		return this.date;
+	public String getBirthDate() {
+		return this.birthDate;
+	}
+
+	public void setBirthDate(String birthDate){
+		this.birthDate = birthDate;
 	}
 
 }
