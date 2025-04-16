@@ -10,8 +10,10 @@ import javax.xml.crypto.Data;
 public class Doctor {
 	private String id;
 	private String specialization;
-	private List<String> schedule;
-	private String name;
+	private String schedule;
+	private String fullName;
+	private String birthDate;
+	private String phoneNumber;
 	private Long createdAt;
 
 	public Doctor() {
@@ -19,23 +21,27 @@ public class Doctor {
 		this.id = UUID.randomUUID().toString();
 	}
 
-	public Doctor(String id, String specialization, List<String> schedule) {
+	public Doctor(String fullName, String specialization, 
+				  String schedule, String birthDate, String phoneNumber) {
 		this.id = UUID.randomUUID().toString();
 		this.specialization = specialization;
 		this.schedule = schedule;
-		this.schedule = new ArrayList<String>();
+		this.fullName = fullName;
+		this.createdAt = new Date().getTime();
+		this.birthDate = birthDate;
+		this.phoneNumber = phoneNumber;
 	}
 
 	public String getId() {
 		return id;
 	}
 
-	public String getName() {
-		return this.name;
+	public String getFullName() {
+		return this.fullName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public String getSpecialization() {
@@ -46,19 +52,45 @@ public class Doctor {
 		this.specialization = specialization;
 	}
 
-	public List<String> getSchedule() {
+	public String getSchedule() {
 		return schedule;
 	}
 
-	public void setSchedule(List<String> schedule) {
+	public void setSchedule(String schedule) {
 		this.schedule = schedule;
 	}
 
+	// Сделать возможность добавления времени работы
 	public void addSchedule(String timeSlot) {
-		this.schedule.add(timeSlot);
+		this.schedule = timeSlot;
+	}
+
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public Long getCreatedAt() {
+		return createdAt;
 	}
 
 	public void resetSchedule() {
-		this.schedule = new ArrayList<String>();
+		this.schedule = "График работы не указанн!";
+	}
+
+	@Override
+	public String toString() {
+		return fullName + " : " + specialization + " : " + schedule + " : " + birthDate + " : " + phoneNumber;
 	}
 }

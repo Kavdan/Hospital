@@ -61,4 +61,9 @@ public class Patient {
 		this.birthDate = birthDate;
 	}
 
+	@Override
+	public String toString() {
+		return "Patient [fullName=" + fullName + ", number=" + number + ", birthDate=" + birthDate + "]";
+	}
+
 }

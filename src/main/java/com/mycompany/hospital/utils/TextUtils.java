@@ -2,11 +2,13 @@ package com.mycompany.hospital.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TextUtils {
     public static String message = "";
     public static int createMenu(ArrayList<String> options) throws IOException, InterruptedException{
         enableRawMode();
+        hideCursor();
         
         int idx = 0;
         int key;
@@ -33,6 +35,7 @@ public class TextUtils {
                 }
             } else if(key == 10 || key == 13){
                 disableRawMode();
+                showCursor();
                 return idx + 1;
             }
         }
@@ -44,7 +47,9 @@ public class TextUtils {
             if(i == selectedIndex){
                 System.out.print("> ");
             }
-            System.out.println(options.get(i));
+            System.out.print(options.get(i));
+            if(i + 1 == options.size()) System.out.print("\r\n");
+            else System.out.print("\n");
         }
     }
 
@@ -58,18 +63,36 @@ public class TextUtils {
         }
     }
 
-    private static void clearConsole() {
+    public static ArrayList<String> objArrToStrArray(List<?> objects){
+        ArrayList<String> arr = new ArrayList<>();
+
+        for(Object obj : objects) {
+            arr.add(obj.toString());
+        }
+
+        return arr;
+    }
+
+    public static void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    private static void enableRawMode() throws IOException, InterruptedException {
+    public static void enableRawMode() throws IOException, InterruptedException {
         Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", "stty -echo raw </dev/tty"}).waitFor();
     }
 
-    private static void disableRawMode() throws IOException, InterruptedException {
+    public static void disableRawMode() throws IOException, InterruptedException {
         Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", "stty echo cooked </dev/tty"}).waitFor();
     }
 
+    public static void hideCursor() {
+        System.out.print("\033[?25l");
+        System.out.flush();
+    }
 
+    public static void showCursor() {
+        System.out.print("\033[?25h");
+        System.out.flush();
+    }
 }
