@@ -1,6 +1,7 @@
 package com.mycompany.hospital.services;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -19,7 +20,7 @@ public class AppointmentService {
         this.scanner = scanner;
     }
 
-    public void manageAppointments() throws IOException, InterruptedException {
+    public void manageAppointments() throws IOException, InterruptedException, ParseException {
         boolean back = false;
 
         while (!back) {
@@ -50,7 +51,7 @@ public class AppointmentService {
         }
     }
 
-    private void createAppointment() throws IOException, InterruptedException {
+    private void createAppointment() throws IOException, InterruptedException, ParseException {
         System.out.println("\nВыбор пациента:");
         Patient patient = pickPatient();
 
@@ -59,13 +60,7 @@ public class AppointmentService {
 
         System.out.print("\nВведите дату приёма (ГГГГ-ММ-ДД HH:MM): ");
         String dateStr = scanner.nextLine();
-        Date date;
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dateStr);
-        } catch (Exception e) {
-            TextUtils.message = "Неверный формат даты!";
-            return;
-        }
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dateStr);
 
         Appointment appointment = new Appointment(patient.getId(), doctor.getId(), date);
         data.getAppointments().add(appointment);

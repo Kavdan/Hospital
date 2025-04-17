@@ -1,1 +1,12 @@
-{"patients":[{"id":"7ade8ffa-31e0-4415-b8b8-775fcce79447","fullName":"sdjfkljsdklf","number":"ksdjfkl","birthDate":"fjdsklfj"},{"id":"432ff0d4-b820-4ba5-b90e-52bcf000595f","fullName":"P0P2P?Q\u000BP0P?  P0P?P0P2P? P0P?","number":"fdsf dfd d f","birthDate":"P?Q\u0000P0Q\u0000P?"}],"doctors":[{"id":"2535b83e-0d25-4fd1-a196-6bf82c9d7765","specialization":"AnalniyVrach","schedule":"mn: 09.00-18.00","fullName":"Domanica Pupun Balabunchikovich","birthDate":"2001-12-12","phoneNumber":"8(999)999-99-99","createdAt":1744821199989}],"appointments":[]}
+{
+    "patients": [
+        {
+            "id": "abc99fd9-d6d6-4658-97d2-6c35c7a74951",
+            "fullName": "Valdun Barbun Gigigi",
+            "number": "8(999)999-99-99",
+            "birthDate": 978296400000
+        }
+    ],
+    "doctors": [],
+    "appointments": []
+}

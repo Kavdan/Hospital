@@ -1,7 +1,10 @@
 package com.mycompany.hospital.services;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,12 +17,12 @@ public class PatientService {
     private HospitalData data;
     private Scanner scanner;
 
-    public PatientService(HospitalData data, Scanner scanner){
+    public PatientService(HospitalData data, Scanner scanner) {
         this.data = data;
         this.scanner = scanner;
     }
 
-    public void managePatients() throws IOException, InterruptedException {
+    public void managePatients() throws IOException, InterruptedException, ParseException {
         boolean back = false;
         while (!back) {
             System.out.println("\r\n=== Управление пациентами ===");
@@ -63,14 +66,15 @@ public class PatientService {
         }
     }
 
-    private void addPatient() {
+    private void addPatient() throws ParseException {
         System.out.println("\r\n=== Добавление нового пациента ===");
 
         System.out.print("ФИО: ");
         String fullname = scanner.nextLine();
 
         System.out.print("Дата рождения (ГГГГ-ММ-ДД): ");
-        String birthDate = scanner.nextLine();
+        String date = scanner.nextLine();
+        Date birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 
         System.out.print("Номер телефона: ");
         String number = scanner.nextLine();
@@ -103,44 +107,54 @@ public class PatientService {
 
         if (patients.size() > 0) {
             TextUtils.message = patients.toString();
-        } 
-        else{
+        } else {
             TextUtils.message = "Пациет с данным id не найден!";
         }
     }
 
-    private void updatePatient() {
-        System.out.print("\r\nВведите ID пациента: ");
-        String id = scanner.next();
+    private void updatePatient() throws IOException, InterruptedException, ParseException {
+        System.out.print("\r\nВвыберите пациента: ");
+        Patient patient = pickPatient();
 
-        for (Patient patient : data.getPatients()) {
-            if (patient.getId().equals(id)) {
-                System.out.print("\rНовое ФИО пациента " + patient.getFullName() + ": ");
-                patient.setFullName(scanner.next());
+        System.out.print("\rНовое ФИО пациента " + patient.getFullName() + ": ");
+        patient.setFullName(scanner.next());
 
-                System.out.print("\rНовая дата рождения (ГГГГ-ММ-ДД) " + patient.getBirthDate() + ": ");
-                patient.setBirthDate(scanner.nextLine());
+        System.out.print("\rНовая дата рождения (ГГГГ-ММ-ДД) " + patient.getBirthDate() + ": ");
+        String date = scanner.nextLine();
+        Date birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        patient.setBirthDate(birthDate);
 
-                System.out.print("\rНовый номер (" + patient.getNumber() + "): ");
-                patient.setNumber(scanner.next());
+        System.out.print("\rНовый номер (" + patient.getNumber() + "): ");
+        patient.setNumber(scanner.next());
 
-                TextUtils.message = "Новые данные пациента: " + patient.toString();
-                return;
-            }
-        }
-
-        TextUtils.message = "Пациент с id = " + id + " не был найден!";
+        TextUtils.message = "Новые данные пациента: " + patient.toString();
     }
 
-    private void deletePatient() {
-        System.out.print("\r\nВведите ID пациента для удаления: ");
-        String id = scanner.next();
+    private void deletePatient() throws IOException, InterruptedException {
+        System.out.print("\r\nВвыберите пациента для удаления: ");
+        Patient patient = pickPatient();
 
-        if (data.getPatients().removeIf(p -> p.getId().equals(id))) {
-            data.getAppointments().removeIf(a -> a.getPatientId().equals(id));
-            TextUtils.message = "Пациент и его история удалены.";
+        if (data.getPatients().remove(patient)) {
+            data.getAppointments().removeIf(a -> a.getPatientId().equals(patient.getId()));
+            TextUtils.message = "Пациент и его история удалены!";
         } else {
-            TextUtils.message = "Пациент с id = " + id + " не найден.";
+            TextUtils.message = "Ошибка при удалении пациента!";
         }
+    }
+
+    private Patient pickPatient() throws IOException, InterruptedException {
+        List<Patient> patients = data.getPatients();
+        if (patients.size() == 0) {
+            TextUtils.message = "В больнице нет пациентов!";
+            throw new IOException();
+        }
+
+        int patientNum = TextUtils.createMenu(TextUtils.objArrToStrArray(patients));
+        if (patientNum > patients.size()) {
+            TextUtils.message = "Такого пациента не существует!";
+            throw new IOException();
+        }
+
+        return patients.get(patientNum - 1);
     }
 }

@@ -1,7 +1,10 @@
 package com.mycompany.hospital.services;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,7 +22,7 @@ public class DoctorService {
         this.scanner = scanner;
     }
 
-    public void manageDoctors() throws IOException, InterruptedException {
+    public void manageDoctors() throws IOException, InterruptedException, ParseException {
         boolean back = false;
         while (!back) {
             System.out.println("\r\n=== Управление врачами ===");
@@ -63,14 +66,15 @@ public class DoctorService {
         }
     }
 
-    private void addDoctor() {
+    private void addDoctor() throws ParseException {
         System.out.println("\r\n=== Добавление нового врача ===");
 
         System.out.print("ФИО: ");
         String fullname = scanner.nextLine();
 
         System.out.print("Дата рождения (ГГГГ-ММ-ДД): ");
-        String birthDate = scanner.nextLine();
+        String date = scanner.nextLine();
+        Date birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(date); 
 
         System.out.print("Номер телефона: ");
         String phoneNumber = scanner.nextLine();
@@ -129,7 +133,7 @@ public class DoctorService {
         return doctors.get(doctorNum - 1);
     }
 
-    private void updateDoctor() throws IOException, InterruptedException {
+    private void updateDoctor() throws IOException, InterruptedException, ParseException {
         System.out.print("\r\nВыберите доктора: ");
 
         Doctor doctor = pickDoctor();
@@ -138,7 +142,9 @@ public class DoctorService {
         doctor.setFullName(scanner.nextLine());
 
         System.out.print("\rНовая дата рождения (ГГГГ-ММ-ДД) " + doctor.getBirthDate() + ": ");
-        doctor.setBirthDate(scanner.nextLine());
+        String date = scanner.nextLine();
+        Date birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        doctor.setBirthDate(birthDate);
 
         System.out.print("\rНовый номер (" + doctor.getPhoneNumber() + "): ");
         doctor.setPhoneNumber(scanner.nextLine());

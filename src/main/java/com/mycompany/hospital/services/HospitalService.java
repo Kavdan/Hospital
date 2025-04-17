@@ -1,6 +1,7 @@
 package com.mycompany.hospital.services;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,7 +27,7 @@ public class HospitalService {
         this.appointmentService = new AppointmentService(data, scanner);
     }
 
-    public void run() throws IOException, InterruptedException {
+    public void run() throws IOException, InterruptedException, ParseException {
         boolean running = true;
         while (running) {
             System.out.println("\r\n=== Система управления больницей ===");

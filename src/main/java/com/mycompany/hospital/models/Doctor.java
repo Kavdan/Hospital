@@ -8,11 +8,11 @@ import java.util.UUID;
 import javax.xml.crypto.Data;
 
 public class Doctor {
-	private String id;
+	private String id; 
 	private String specialization;
 	private String schedule;
 	private String fullName;
-	private String birthDate;
+	private Date birthDate;
 	private String phoneNumber;
 	private Long createdAt;
 
@@ -22,7 +22,7 @@ public class Doctor {
 	}
 
 	public Doctor(String fullName, String specialization, 
-				  String schedule, String birthDate, String phoneNumber) {
+				  String schedule, Date birthDate, String phoneNumber) {
 		this.id = UUID.randomUUID().toString();
 		this.specialization = specialization;
 		this.schedule = schedule;
@@ -65,11 +65,11 @@ public class Doctor {
 		this.schedule = timeSlot;
 	}
 
-	public String getBirthDate() {
+	public Date getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(String birthDate) {
+	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
 

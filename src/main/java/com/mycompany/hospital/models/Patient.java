@@ -1,5 +1,7 @@
 package com.mycompany.hospital.models;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 public class Patient {
@@ -7,13 +9,13 @@ public class Patient {
 	// private int age;
 	private String fullName;
 	private String number;
-	private String birthDate;
+	private Date birthDate;
 
 	public Patient() {
 		this.id = UUID.randomUUID().toString();
 	}
 
-	public Patient(String fullName, String number, String birthDate) {
+	public Patient(String fullName, String number, Date birthDate) {
 		this.id = UUID.randomUUID().toString();
 		// this.age = age;
 		this.fullName = fullName;
@@ -53,17 +55,27 @@ public class Patient {
 		return this.number;
 	}
 
-	public String getBirthDate() {
+	public Date getBirthDate() {
 		return this.birthDate;
 	}
 
-	public void setBirthDate(String birthDate){
+	public void setBirthDate(Date birthDate){
 		this.birthDate = birthDate;
+	}
+
+	public int getAge() {
+		long yearInMs = 1000L * 60 * 60 * 24 * 365;
+    	return (int) ((new Date().getTime() - birthDate.getTime()) / yearInMs);
+	}
+
+	public String formatBirthDate(String pattern){
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		return sdf.format(birthDate);
 	}
 
 	@Override
 	public String toString() {
-		return "Patient [fullName=" + fullName + ", number=" + number + ", birthDate=" + birthDate + "]";
+		return fullName + ":" + number + ":" + formatBirthDate("yyyy-MM-dd");
 	}
 
 }
